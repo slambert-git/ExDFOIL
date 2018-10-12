@@ -4,7 +4,7 @@
 # This script will accept a (1) a file containing individual names (1 on each line) and (2) a vcf file, and return a file that is ready for analysis in TreeMix (all.treemix.gz). 
 # Usage example: "bash vcfindv2treemix.sh my_indvs.txt my_vcf.vcf"
 # The first command-line argument must be the individuals file (my_indvs.txt), and the second must be the vcf file (my_vcf.vcf). 
-# It's best to run this in 'clean' directory with no other files. In particular make sure there are no stray files with the extension .allelecounts
+# It's best to run this in 'clean' directory with no other files. Intermediate files produced are removed using a glob.
 ##
 
 ## Read command-line arguments
