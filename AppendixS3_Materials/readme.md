@@ -1,7 +1,7 @@
 # TreeMix Analyses
 
 ## Dependencies
-vcftools (v0.1.11+); treemix (v1.13); bash command-line utilities (cut, paste, tail); gzip; R
+vcftools (v0.1.11); treemix (v1.13); bash command-line utilities (cut, paste, tail); gzip; R
 
 ## Format Conversion
 First, I needed to convert from a .vcf format file to the format expected by TreeMix.
