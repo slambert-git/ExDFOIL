@@ -222,7 +222,7 @@ library(phytools)
 library(RColorBrewer)
 library(ggtree)
 ```
-We are now ready to read the table containing test results and associated sample information (`all.summary_appended.txt`) into R.
+We are now ready to read the table containing test results and associated sample information (`all.summary.alt_appended.txt`) into R.
 
 ```
 MyDFOIL<-read.table("all.summary.alt_appended.txt",header=FALSE)
