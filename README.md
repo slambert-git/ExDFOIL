@@ -294,7 +294,7 @@ barplot(prop.table(p12num_pruned,margin=2),xlim=c(0, ncol(prop.table(p12num_prun
 
 
 ### Summary and visualization of results across phylogeny
-To summarize *D*<sub>FOIL</sub> results across phylogenetic space, we will first need read in a rooted phylogenetic tree containing all of the individuals. This tree should be pruned to remove individuals not involved in any tests. The example file is `oberon_ornatus_pruned.tree`.
+To summarize *D*<sub>FOIL</sub> results across phylogenetic space, we will first need read in a rooted phylogenetic tree containing all of the individuals. This tree can optionally be pruned to remove individuals not involved in any tests. The example file is `oberon_ornatus_pruned.tree`.
 
 ```
 MyTree <- read.tree("oberon_ornatus_pruned.tree")
@@ -329,7 +329,7 @@ prop.table(mrca12_fig_num) -> mrca12_fig_prop
 t(mrca12_fig_prop) -> mrca12_fig_prop_t
 as.data.frame(mrca12_fig_prop_t) -> mrca12_fig_prop_df
 mrca12_fig_prop_df$node <- rownames(mrca12_fig_prop_df)
-pies12<-nodepie(mrca12_fig_prop_df,cols=1:6, color=c("gray","green","orange","yellow","brown","blue"))
+pies12<-nodepie(mrca12_fig_prop_df,cols=1:5, color=c("gray","orange","yellow","brown","blue"))
 
 #For the MRCA of Taxa P3 and P4
 as.matrix(mrca34_fig[,-1]) -> mrca34_fig_num 
@@ -338,7 +338,7 @@ prop.table(mrca34_fig_num) -> mrca34_fig_prop
 t(mrca34_fig_prop) -> mrca34_fig_prop_t
 as.data.frame(mrca34_fig_prop_t) -> mrca34_fig_prop_df
 mrca34_fig_prop_df$node <- rownames(mrca34_fig_prop_df)
-pies34<-nodepie(mrca34_fig_prop_df,cols=1:6, color=c("gray","green","orange","yellow","brown","blue"))
+pies34<-nodepie(mrca34_fig_prop_df,cols=1:5, color=c("gray","orange","yellow","brown","blue"))
 
 ```
 
