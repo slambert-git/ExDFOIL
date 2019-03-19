@@ -356,7 +356,7 @@ Once again, the key functions here are `aggregate()` and `barplot()`. The exampl
 
 ```
 ##Read in a data table with DFOIL results produced using "--mode dfoil"
-MyDFOIL_noalt<-read.table("/media/shea/454286D06B823499/Dropbox/Ornatus_Chapter_Draft_Oct2017/GitHub/test/all.summary.noalt_appended.txt",header=FALSE)
+MyDFOIL_noalt<-read.table("all.summary.noalt_appended.txt",header=FALSE)
 MyDFOIL_noalt<-as.data.frame(MyDFOIL_noalt)
 colnames(MyDFOIL_noalt)<-c("ind1","ind2","ind3","ind4","count1","count2","count3","count4","introg","DFO_stat","DFO_p","DIL_stat","DIL_p","DFI_stat","DFI_p","DOL_stat","DOL_p","name1","batch1","pop1","species1","subsp1","name2","batch2","pop2","species2","subsp2","name3","batch3","pop3","species3","subsp3","name4","batch4","pop4","species4","subsp4")
 
