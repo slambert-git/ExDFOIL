@@ -2,10 +2,19 @@
 #Author: Shea M. Lambert
 
 ##package dependencies 
-##user must install these prior to running the function
-library(ape)
-library(phytools)
-library(stringr)
+if(!require(ape)){
+    install.packages("ape")
+    library(somepackage)
+}
+if(!require(phytools)){
+    install.packages("phytools")
+    library(somepackage)
+}
+if(!require(stringr)){
+    install.packages("stringr")
+    library(somepackage)
+}
+
 
 ##Usage: Run this script using "Rscript DFOIL_Picker.R mynamesfile mytreefile" in the directory containing these files. 
 ##Output will be written as "myoutput.txt" 
