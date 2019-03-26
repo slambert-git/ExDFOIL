@@ -24,7 +24,7 @@ It is *not* standalone software, and it does *not* alter the underlying *D*<sub>
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Dependencies
-Unix shell (tested with GNU bash v4.3.48(1)-release and 4.1.2(2)-release), GNU awk (tested with v3.1.7 and v4.1.3), GNU parallel (tested on 20160722 and 20141022), R v3.4.1 and the packages combinat v0.0-8, phytools v0.6-44, and ape v5.0, ggtree v1.10, and *D*<sub>FOIL</sub> https://github.com/jbpease/dfoil (version 2017-08-25). Also required is `selectSeqs.pl` by Dr. Naoki Takebayashi (found in `Scripts/`). All versions provided are those tested on; older or younger versions may or may not work. 
+Unix shell (tested with GNU bash v4.3.48(1)-release and 4.1.2(2)-release), GNU awk (tested with v3.1.7 and v4.1.3), GNU parallel (tested on 20160722 and 20141022), R v3.4.1 and the packages stringr v1.0.0, phytools v0.6-44, and ape v5.0, ggtree v1.10, and *D*<sub>FOIL</sub> https://github.com/jbpease/dfoil (version 2017-08-25). Also required is `selectSeqs.pl` by Dr. Naoki Takebayashi (found in `Scripts/`). All versions provided are those tested on; older or younger versions may or may not work. 
 
 Note that the scripts for Stage 2) assume that you have the scripts from `Scripts/` in your working directory with executable permissions (or $PATH), as well as the scripts of *D*<sub>FOIL</sub>.
 
