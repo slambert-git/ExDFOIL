@@ -16,7 +16,7 @@ library(stringr)
 commandArgs(trailingOnly = TRUE) -> args
 
 ##read list file
-scan(paste(args[1]),what="character")-> names
+scan(paste(args[1]),what="character")
 
 ##read tree file
 read.tree(paste(args[2])) -> tree
@@ -79,7 +79,7 @@ results=vector()
 for(i in nodes[,2]){
   h1=nodes[nodes[,2] == i ,1]
   desc1=alldescs[[which(nodes[,2] == i)]] 
-  compnodes=nodes[nodes[,1] > h1 & !(nodes[,2] %in% desc1),2]
+  compnodes=nodes[!(nodes[,2] %in% c(i,desc1)) & nodes[,1] >= h1,2]
   if(length(compnodes) == 0){
     next
   } else{
@@ -89,9 +89,17 @@ for(i in nodes[,2]){
   }
 }
 
-##remove duplicates (possible because of ties)
-results=unique(results)
 
+#duplicate checking: duplicates could occur if there are nodes with identical heights. 
+taxsort<-function(vec){
+  splt=strsplit(vec," ")
+  sorted=sort(splt[[1]])
+  return(paste(sorted,collapse=" "))
+}
+
+sortvec=lapply(results,taxsort)
+
+results=results[!duplicated(unlist(sortvec))]
 
 ##write results
 write.table(results,file="./myoutput.txt",quote=FALSE,row.names=FALSE,col.names=FALSE)
