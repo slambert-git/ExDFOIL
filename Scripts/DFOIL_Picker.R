@@ -5,56 +5,11 @@
 ##user must install these prior to running the function
 library(ape)
 library(phytools)
-library(combinat)
+library(stringr)
 
 ##Usage: Run this script using "Rscript DFOIL_Picker.R mynamesfile mytreefile" in the directory containing these files. 
 ##Output will be written as "myoutput.txt" 
 ##Example files for the names file (plain-text) and tree file (newick format) are provided as alloborn.txt and obornfull_point_dated.tre
-
-###Tree_Eval subfunction
-tre_eval<-function(nam,tre){
-  
-  #must provide four taxa for DFOIL
-  stopifnot(length(nam) == 4)
-  
-  #Prune all but the four taxa in "list" from the tree 
-  drop.tip(tre,setdiff(tre$tip.label,nam)) -> evaltre
-
-  #Find reciprocally monophyletic clades of size 2
-  getCladesofSize(evaltre,clade.size=2)-> clades
-  
-  #If there are two such clades, find which is older, so they may be returned in the order expected by DFOIL
-  if(length(clades)==2){
-    #find which clade is P1/P2 and which is P3/P4
-    clades[[1]]$edge.length[1] -> length1
-    clades[[2]]$edge.length[1] -> length2  
-    if((length1 >= length2) == TRUE){
-      return(c(clades[[2]]$tip.label,clades[[1]]$tip.label))
-    } else{
-      return(c(clades[[1]]$tip.label,clades[[2]]$tip.label))
-    }
-  } 
-} 
-
-###DFOIL_picker function (Applies tre_eval subfunction to each possible four-taxon combination)
-DFOIL_picker<-function(names,tree){
-  
-  #get all unique combinations of names
-  combn(names,4)->comb_names
-  
-  #apply the tree evaluation subfunction to each
-  apply(comb_names,2,function(x) tre_eval(x,tree))->full_list
-  
-  #remove combinations that failed evaluation
-  full_list <- full_list[-which(sapply(full_list, is.null))]
-  
-  #prepare output file
-  output <- matrix(unlist(full_list), ncol = 4, byrow = TRUE)
-  
-  #write output file
-  write.table(output,file="./myoutput.txt",quote=FALSE,row.names=FALSE,col.names=FALSE)
-}
-
 
 
 ##Read Input from Command Line
@@ -64,7 +19,84 @@ commandArgs(trailingOnly = TRUE) -> args
 scan(paste(args[1]),what="character")-> names
 
 ##read tree file
-read.tree(paste(args[2])) -> top
+read.tree(paste(args[2])) -> tree
 
-##Run Function - output saved to current working directory as "myoutput.txt"
-DFOIL_picker(names,top)
+#drop all but names
+tree=drop.tip(tree,setdiff(tree$tip.label,names))
+
+#get node heights
+heights=nodeHeights(tree)
+
+#get edge heights
+edgeheights=cbind(heights[,1],tree$edge[,1])
+
+#get number of taxa
+tiplen=length(tree$tip.label)
+
+#get list of nodes and heights
+nodes=edgeheights[!duplicated(edgeheights[,2]),]
+
+
+#get all descendants for all nodes
+get_descs<-function(node){
+  desc=getDescendants(tree,node)
+  return(desc)
+}
+
+alldescs=lapply(nodes[,2],get_descs)
+
+
+#get all clades of size 2 with MRCA at each node
+get_pairs<-function(node){
+  desc1=alldescs[[which(nodes[,2] == node)]] 
+  child1=desc1[1]
+  child2=desc1[2]
+  if(child1 <= tiplen){
+    cd1=tree$tip.label[child1]
+  } else {
+    cdtemp=alldescs[[which(nodes[,2] == child1)]]
+    cdtemp=cdtemp[cdtemp <= tiplen]
+    cd1=tree$tip.label[cdtemp]
+  }
+  if(child2 <= tiplen){
+    cd2=tree$tip.label[child2]
+  } else {
+    cdtemp=alldescs[[which(nodes[,2] == child2)]] 
+    cdtemp=cdtemp[cdtemp <= tiplen]
+    cd2=tree$tip.label[cdtemp]
+  }
+  result=expand.grid(cd1,cd2)
+  return(apply(result,1,paste,collapse=" "))
+}
+
+allpairs=lapply(nodes[,2],get_pairs)
+
+
+#prepare results vector
+results=vector()
+
+#get all valid combinations for each node
+for(i in nodes[,2]){
+  h1=nodes[nodes[,2] == i ,1]
+  desc1=alldescs[[which(nodes[,2] == i)]] 
+  compnodes=nodes[nodes[,1] > h1 & !(nodes[,2] %in% desc1),2]
+  if(length(compnodes) == 0){
+    next
+  } else{
+    compairs=unlist(lapply(compnodes,function(x) allpairs[[which(nodes[,2] == x)]]))
+    nextres=apply(expand.grid(compairs,allpairs[[which(nodes[,2] == i)]]),1,paste,collapse=" ")
+    results=c(results,nextres)
+  }
+}
+
+##remove duplicates (possible because of ties)
+results=unique(results)
+
+
+##write results
+write.table(results,file="./myoutput.txt",quote=FALSE,row.names=FALSE,col.names=FALSE)
+
+
+
+
+
