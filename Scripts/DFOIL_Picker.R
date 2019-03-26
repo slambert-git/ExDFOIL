@@ -9,14 +9,14 @@ library(stringr)
 
 ##Usage: Run this script using "Rscript DFOIL_Picker.R mynamesfile mytreefile" in the directory containing these files. 
 ##Output will be written as "myoutput.txt" 
-##Example files for the names file (plain-text) and tree file (newick format) are provided as alloborn.txt and obornfull_point_dated.tre
+##Example files for the names file (plain-text) and tree file (newick format) are provided as ornatus_names.txt and ornatus_tree.txt
 
 
 ##Read Input from Command Line
 commandArgs(trailingOnly = TRUE) -> args
 
 ##read list file
-scan(paste(args[1]),what="character")
+scan(paste(args[1]),what="character") -> names
 
 ##read tree file
 read.tree(paste(args[2])) -> tree
