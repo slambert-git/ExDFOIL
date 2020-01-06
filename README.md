@@ -168,7 +168,7 @@ As an example; here's how we would run each step of *D*<sub>FOIL</sub> pipeline,
 
     fasta2foiler.sh mynamesdir myfasta myoutgroup
     dfoiler_alt.sh
-    parallel './summarizer_alt.sh < <(echo {})' ::: counts/*.counts
+    parallel 'summarizer_alt.sh < <(echo {})' ::: counts/*.counts
     
 To do the same while including singleton site-pattern counts, use `dfoiler_noalt.sh`, `analyzer_noalt.sh`, and `summarizer_noalt.sh`. You'll need to run these on the example data to reproduce our Figure 6 (see below). 
   
