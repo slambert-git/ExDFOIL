@@ -128,7 +128,7 @@ At this point, you could run the *D*<sub>FOIL</sub> script`dfoil_analyze.py` on 
 To summarize results, we first use `summarizer_alt.sh`, again using GNU parallel, collate results and get them ready for visualization in R. 
 
 ```
-parallel './summarizer_alt.sh < $(echo {})' ::: counts/*.counts
+parallel './summarizer_alt.sh < <(echo {})' ::: counts/*.counts
 ```
 
 Here's the `summarizer_alt.sh` script:
