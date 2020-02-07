@@ -27,36 +27,15 @@ It is *not* standalone software, and it does *not* alter the underlying *D*<sub>
 Unix shell (tested with GNU bash v4.3.48(1)-release and 4.1.2(2)-release), GNU awk (tested with v3.1.7 and v4.1.3), GNU parallel (tested on 20160722 and 20141022), R v3.4.1 and the packages stringr v1.0.0 / phytools v0.6-44 / ape v5.0 / ggtree v1.10, and *D*<sub>FOIL</sub> https://github.com/jbpease/dfoil (commit on 09-19-2018). Also required is `selectSeqs.pl` by Dr. Naoki Takebayashi (found in `Scripts/`). All versions provided are those tested on; older or younger versions may or may not work. 
 
 Note that the scripts for Stage 2) assume that you have the scripts from `Scripts/` in your working directory with executable permissions (or $PATH), as well as the scripts of *D*<sub>FOIL</sub>.
-
 ## Quick Start
-### Warning: Prior results will be overwritten. Start in a clean directory.
-
-### Select taxa and run *D*<sub>FOIL</sub> tests:
-You can execute the selection of taxa and run *D*<sub>FOIL</sub> on the results all at once using `run_ExDFOIL.sh`. You must provide four command-line arguments in the following order : 1) a plaintext list of taxa, one on each line (`mynamesfile`), 2) a rooted phylogenetic tree containing at least all of the taxa of the list (`mytreefile`) 3) a .fasta file containing sequence data for at least all of the taxa (`myfastafile`) 4) a sample to use as the outgroup for *D*<sub>FOIL</sub> (`myoutgroup`). The script will select taxa based on the tree (Stage 1 below) and then execute Ex*D*<sub>FOIL</sub> in parallel on all the corresponding four-taxon subtrees (Stage 2 below). For examples of how I summarized and visualized our results in R; see "Stage 3: Summarization and Visualization" below. 
-
-
-usage:
-``./run_ExDFOIL.sh mynamefiles mytreefile myfastafile myoutgroup
-``
-
-You can use the files in `ExampleData/` to test the pipeline:
-
-```
-mkdir test/
-cd test/
-../Scripts/run_ExDFOIL.sh ../ExampleData/ornatus_names.txt ../ExampleData/ornatus_tree.txt ../ExampleData/oberon_ornatus_reduced.fasta ../ExampleData/minorOG.txt
-```
-
-Note that by default, all the output files of *D*<sub>FOIL</sub> are saved. For the example data, this will be >100,000 small files.
-
-### Just select taxa:
+### Select taxa:
 
 To just select taxa for *D*<sub>FOIL</sub>, you will need  1) a list of taxa (`mynamesfile`) and 2) a rooted phylogenetic tree (`mytreefile`):
     
 ``DFOIL_Picker.R mynamesfile mytreefile``
 
 
-### Just run exhaustive *D*<sub>FOIL</sub>:
+### Run exhaustive *D*<sub>FOIL</sub>:
 
 To run all *D*<sub>FOIL</sub> tests in parallel, you will need 1) A list of taxon combinations (`mynames`) formatted like the output of `DFOIL_Picker.R` 2) a fasta file (`myfasta`) and 3) a file containing the name of the outgroup sequence (`myoutgroup`). 
 
